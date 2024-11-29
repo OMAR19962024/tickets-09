@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParKinG Renzo C9 - Ticket</title>
+    <style>
+        @media print {
+            body { 
+                width: 80mm;
+                margin: 0;
+                padding: 0;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 80mm;
+            margin: 0 auto;
+            padding: 10px;
+            background: #fff;
+        }
+
+        .ticket {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #ccc;
+            padding-bottom: 15px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 8px 0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .ticket-id {
+            font-size: 20px;
+            color: #666;
+            margin: 8px 0;
+            font-weight: bold;
+        }
+
+        .details {
+            margin: 20px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .value {
+            text-align: right;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .section-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 13px;
+            border-bottom: 1px solid #000;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            padding: 2px 0;
+        }
+
+        .divider {
+            border-top: 2px dashed #0a0909;
+            margin: 15px 0;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 15px;
+            border-top: 2px solid #333;
+            padding-top: 10px;
+        }
+
+        .total .label {
+            font-size: 20px;
+        }
+
+        .total .value {
+            font-size: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            margin-top: 20px;
+            border-top: 2px dashed #ccc;
+            padding-top: 15px;
+            font-weight: bold;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <div class="header">
+            <img src="parking renzo.jpg" alt="Logo" class="logo">
+            <h1>ParKinG Renzo C9</h1>
+            <div class="ticket-id" id="ticketId"></div>
+        </div>
+
+        <div class="info-section">
+            <div class="section-header">DATOS PRINCIPALES</div>
+
+        <div class="details">
+            <div class="detail-row">
+                <span class="label">Hora Entrada:</span>
+                <span class="value" id="horaEntrada"></span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Placa:</span>
+                <span class="value" id="placa"></span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Cliente:</span>
+                <span class="value" id="cliente"></span>
+            </div>
+
+            <div class="info-section">
+                <div class="section-header">PERÍODO DE SERVICIO</div>
+
+            <div class="detail-row">
+                <span class="label">Fecha Inicio:</span>
+                <span class="value" id="fechaInicio"></span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Fecha Fin:</span>
+                <span class="value" id="fechaFin"></span>
+            </div>
+
+            <div class="info-section">
+                <div class="section-header">TARIFAS APLICADAS</div>
+
+            <div class="detail-row">
+                <span class="label">Tarifa Día:</span>
+                <span class="value" id="tarifaDia"></span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Tarifa Mes:</span>
+                <span class="value" id="tarifaMes"></span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Adelanto Mes:</span>
+                <span class="value" id="adelantoMes"></span>
+            </div>
+            <div class="detail-row">
+                <span class="label">Admin:</span>
+                <span class="value" id="admin"></span>
+            </div>
+
+            <div class="total">
+                <span class="label">Total:</span>
+                <span class="value" id="total"></span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Gracias por su preferencia</p>
+            <p>Este ticket es su comprobante de estacionamiento</p>
+        </div>
+    </div>
+
+    <script>
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                idMensual: params.get('idMensual') || '-',
+                horaEntrada: params.get('horaEntrada') || '-',
+                placa: params.get('placa') || '-',
+                cliente: params.get('cliente') || '-',
+                fechaInicio: params.get('fechaInicio') || '-',
+                fechaFin: params.get('fechaFin') || '-',
+                tarifaDia: params.get('tarifaDia') || '-',
+                tarifaMes: params.get('tarifaMes') || '-',
+                adelantoMes: params.get('adelantoMes') || '-',
+                admin: params.get('admin') || '-',
+                total: params.get('total') || '-'
+            };
+        }
+
+        function fillTicketData() {
+            const data = getUrlParams();
+            document.getElementById('ticketId').textContent = `Ticket #${data.idMensual}`;
+            document.getElementById('horaEntrada').textContent = data.horaEntrada;
+            document.getElementById('placa').textContent = data.placa;
+            document.getElementById('cliente').textContent = data.cliente;
+            document.getElementById('fechaInicio').textContent = data.fechaInicio;
+            document.getElementById('fechaFin').textContent = data.fechaFin;
+            document.getElementById('tarifaDia').textContent = `Bs/ ${data.tarifaDia}`;
+            document.getElementById('tarifaMes').textContent = `Bs/ ${data.tarifaMes}`;
+            document.getElementById('adelantoMes').textContent = `Bs/ ${data.adelantoMes}`;
+            document.getElementById('admin').textContent = data.admin;
+            document.getElementById('total').textContent = `Bs/ ${data.total}`;
+
+            // Auto imprimir después de cargar
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        }
+
+        window.onload = fillTicketData;
+    </script>
+</body>
+</html>
